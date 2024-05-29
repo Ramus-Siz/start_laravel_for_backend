@@ -10,5 +10,5 @@ Route::get('/user', function (Request $request) {
 Route::get("/etudiants", [\App\Http\Controllers\API\EtudiantsController::class, "getEtudiants"]);
 Route::get("/etudiants/{id}", [\App\Http\Controllers\API\EtudiantsController::class, "getEtudiantById"]);
 Route::post("/etudiants/add", [\App\Http\Controllers\API\EtudiantsController::class, "createEtudiant"]);
-ROute::put("/etudiants/{id}", [\App\Http\Controllers\API\EtudiantsController::class, "updateEtudiant"]);
+ROute::put("/etudiants/update/{id}", [\App\Http\Controllers\API\EtudiantsController::class, "updateEtudiant"]);
 Route::delete("/etudiants/{id}", [\App\Http\Controllers\API\EtudiantsController::class, "deleteEtudiant"]);

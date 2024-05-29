@@ -86,6 +86,22 @@ class EtudiantsController extends Controller
      */
     public function updateEtudiant(Request $request, string $id)
     {
+        $etudiant=Etudiants::where('id', $id)->exists();
+        if ($etudiant) {
+            $etudiantFind=Etudiants::find($id);
+            $etudiantFind->nom=$request->nom;
+            $etudiantFind->email=$request->email;
+            $etudiantFind->password=$request->password;
+            $etudiantFind->save();
+            return response()->json([
+                'message' => 'Etudiant updated successfully',
+                'data' => $etudiantFind
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Etudiant not found',
+            ], 404);
+        }
         //
     }
 
