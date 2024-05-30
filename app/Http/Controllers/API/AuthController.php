@@ -42,7 +42,9 @@ class AuthController extends Controller
 
     public function login (Request $request)
     {
-        $request->validate([
+
+        try {
+            $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
@@ -62,6 +64,30 @@ class AuthController extends Controller
             'message' => 'User logged in successfully',
             'data' => $user,
             'token'=>$user->createToken('API Token')->plainTextToken,
+        ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+            ],500);
+        }
+        
+    }
+
+    public function getProfile (Request $request)
+    {
+        $userData=auth()->user();
+        return response()->json([
+            'message' => 'User profile fetched successfully',
+            'data' => $userData,
+        ], 200);
+    }
+
+    public function logout (Request $request)
+    {
+        auth()->user()->tokens()->delete();
+        return response()->json([
+            'message' => 'User logged out successfully',
         ], 200);
     }
 }
