@@ -36,7 +36,7 @@ class EtudiantsController extends Controller
         $etudiant=new Etudiants();
         $etudiant->nom=$request->nom;
         $etudiant->email=$request->email;
-        $etudiant->password=$request->password;
+        $etudiant->password=bcrypt($request->password);
         $etudiant->save();
 
         return response()->json([
@@ -91,7 +91,7 @@ class EtudiantsController extends Controller
             $etudiantFind=Etudiants::find($id);
             $etudiantFind->nom=$request->nom;
             $etudiantFind->email=$request->email;
-            $etudiantFind->password=$request->password;
+            $etudiantFind->password=bcrypt($request->password);
             $etudiantFind->save();
             return response()->json([
                 'message' => 'Etudiant updated successfully',
@@ -110,6 +110,18 @@ class EtudiantsController extends Controller
      */
     public function deleteEtudiant(string $id)
     {
+        $etudiant=Etudiants::where('id', $id)->exists();
+        if ($etudiant) {
+            $etudiantFind=Etudiants::find($id);
+            $etudiantFind->delete();
+            return response()->json([
+                'message' => 'Etudiant deleted successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Etudiant not found',
+            ], 404);
+        }
         //
     }
 }
