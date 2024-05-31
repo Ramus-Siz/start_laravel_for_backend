@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 
 
 class AuthController extends Controller
@@ -25,6 +26,8 @@ class AuthController extends Controller
         $user->email=$request->email;
         $user->password=$request->password;
         $user->save();
+
+        event(new Registered($user));
 
         return response()->json([
             'message' => 'User created successfully',

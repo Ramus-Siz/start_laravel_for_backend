@@ -13,7 +13,7 @@ class EtudiantsController extends Controller
      */
     public function getEtudiants()
     {
-     $etudiants=Etudiants::all();
+     $etudiants=Etudiants::paginate(1);
      return response()->json([
         "message" => "Liste d'etudiants",
         "data" => $etudiants,

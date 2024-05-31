@@ -16,6 +16,7 @@ Route::delete("/etudiants/delete/{id}", [\App\Http\Controllers\API\EtudiantsCont
 
 Route::post("/login", [\App\Http\Controllers\API\AuthController::class, "login"]);
 Route::post("/register/user",[\App\Http\Controllers\API\AuthController::class, "register"]);
+   
 
 Route::group (["middleware" => "auth:sanctum"], function () {
 Route::get("/etudiants/{id}", [\App\Http\Controllers\API\EtudiantsController::class, "getEtudiantById"]);
